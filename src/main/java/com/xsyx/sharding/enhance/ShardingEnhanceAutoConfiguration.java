@@ -8,10 +8,10 @@ import com.xsyx.sharding.enhance.dynamic.actualdata.ActualDataNodesService;
 import com.xsyx.sharding.enhance.dynamic.datasource.DefaultDynamicDatasourceService;
 import com.xsyx.sharding.enhance.dynamic.datasource.DynamicDatasourceService;
 import com.xsyx.sharding.enhance.dynamic.table.DynamicCreateTableService;
-import com.xsyx.sharding.enhance.exception.DataNodesRefreshException;
 import com.xsyx.sharding.enhance.properties.ShardingEnhanceProperties;
 import com.xsyx.sharding.enhance.task.CreateTableTask;
 import com.xsyx.sharding.enhance.task.RefreshTableNodesTask;
+import java.util.List;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +26,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * @author lirh
  * @date 2021/02/25 19:36
@@ -39,10 +36,12 @@ import java.util.List;
 @EnableConfigurationProperties(value = ShardingEnhanceProperties.class)
 public class ShardingEnhanceAutoConfiguration {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShardingEnhanceAutoConfiguration.class);
+
     @ConditionalOnMissingBean
     @Bean
     public DynamicDatasourceService dynamicDatasourceService() {
-        System.out.println("dynamicDatasourceService init");
+        logger.info("dynamicDatasourceService init");
         return new DefaultDynamicDatasourceService();
     }
 
